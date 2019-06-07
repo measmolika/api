@@ -1,0 +1,17 @@
+{
+  "pgsql": {
+  	"user": "dev",
+    "host": "localhost",
+    "database":"api",
+    "password":"dev",
+    "port": 5432
+  },
+  
+  "pgsql2": {
+  	"user":"po",
+  	"host": "localhost",
+  	"database":"pi",
+  	"password":"po",
+    "port": 5432
+  }
+}
