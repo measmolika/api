@@ -1,0 +1,18 @@
+{
+  "pool_eu": {
+    "username": "dev",
+    "password": "dev",
+    "database": "devdb",
+    "host": "127.0.0.1",
+    "port": 5432,
+    "dialect": "psql"
+  },
+  "pool_us": {
+    "username": "po",
+    "password": "po",
+    "database": "pi",
+    "host": "127.0.0.1",
+    "port": 5432,
+    "dialect": "psql"
+  }
+}

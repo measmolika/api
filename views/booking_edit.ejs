@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+    <title>New Booking</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet">
+    <link href="../public/styles.css" rel="stylesheet" type="text/css">
+ </head>
+ 
+<body>
+    <div class="container">
+        <h2>New Booking</h2>
+        <form action="http://localhost:3000/booking_edit" method="put">
+            <label for="name">Client ID</label>
+            <input type="text" name="client_id">
+            <label for="car_code">Car Code</label>
+            <input type="text" name="car_code">
+            <label for="rental_date">Rental Date</label>
+            <input type="date" name="rental_date">
+            <input type="submit">
+        </form>
+        <a href="/bookings">View Bookings</a>
+    </div>
+</body>
+ 
+</html>

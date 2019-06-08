@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <title> Clients </title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet">
+    <link href="../public/styles.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      
+          <h2> Clients </h2>
+      <% for(var i = 0; i < clients.length; i++){ %>
+            <a href="/client/<%= clients[i].id %>">
+            <li>id : <%= clients[i].id %> | name : <%= clients[i].name %> |  | email : <%= clients[i].email %></li></a>
+      <% } %><br>
+
+      <a href="/client_create">New Client</a><br>
+      <a href="/bookings">View Bookings</a>
+
+  </div>
+  </body>
+</html>

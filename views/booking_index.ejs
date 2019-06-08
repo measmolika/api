@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <title> Bookings </title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet">
+    <link href="../public/styles.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      
+          <h2> Bookings </h2>
+      <% for(var i = 0; i < bookings.length; i++){ %>
+            <li>name: <%= bookings[i].name %> | code : <%= bookings[i].car_code %> | date : <%= bookings[i].rental_date %></li>
+      <% } %><br>
+
+      <a href="/booking_create">New Booking</a><br>
+      <a href="/clients">View Clients</a>
+  </div>
+  </body>
+</html>

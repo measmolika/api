@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+    <title>Client Registration</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:100"     rel="stylesheet">
+    <link href="../public/styles.css" rel="stylesheet">
+ </head>
+ 
+<body>
+    <div class="container">
+        <h2>Client Registration</h2>
+        <form action="http://localhost:3000/clients" method="post">
+            <label for="name">Name</label>
+            <input type="text" name="name"><br>
+            <label for="email">Email</label>
+            <input type="email" name="email"><br>
+            <label for="phone">Phone Number</label>
+            <input type="text" name="phone"><br>
+            <label for="address">Home Address</label>
+            <input type="text" name="address"><br>
+            <label for="phone">Date of Birth</label>
+            <input type="date" name="date_of_birth">
+            <input type="submit">
+        </form>
+        <a href="/clients">View Clients</a><br>
+        <a href="/client_create">New Client</a>
+
+    </div>
+</body>
+ 
+</html>
