@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <title> Distributor Login </title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet">
+    <link href="../public/styles.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <h2>Select Distributor</h2>
+      <form action="/login" method='POST'>
+      <select name="distributors">
+      <% for(var i = 0; i < distributors.length; i++){ %>
+            <option value="<%= distributors[i].id%>"> <%= distributors[i].name %></option>
+      <% } %><br>
+      </select>
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+  </body>
+</html>

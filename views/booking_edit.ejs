@@ -9,14 +9,24 @@
  
 <body>
     <div class="container">
-        <h2>New Booking</h2>
-        <form action="http://localhost:3000/booking_edit" method="put">
-            <label for="name">Client ID</label>
-            <input type="text" name="client_id">
+        <h2>Edit Booking</h2>
+        <form action="http://localhost:3000/booking/<%= id %>" method="PUT">
+            <input type="text" name="client_id" value = "1" hidden><br>
+            <label for="name">Name</label>
+            <input type="text" name="name" value="<%= name %>"><br>
+            <label for="email">Email</label>
+            <input type="email" name="email" value="<%= email %>"><br>
+            <label for="phone">Phone Number</label>
+            <input type="text" name="phone"><br>
+            <label for="address">Home Address</label>
+            <input type="text" name="address"><br>
+            <label for="phone">Date of Birth</label>
+            <input type="date" name="date_of_birth"><br>
             <label for="car_code">Car Code</label>
-            <input type="text" name="car_code">
+            <input type="text" name="car_code" value="<%= car_code %>"><br>
             <label for="rental_date">Rental Date</label>
-            <input type="date" name="rental_date">
+            <input type="date" name="rental_date" value="<%= rental_date %>"><br>
+            <input type="checkbox" name="is_eu_client" > I am an EU residence.<br>
             <input type="submit">
         </form>
         <a href="/bookings">View Bookings</a>

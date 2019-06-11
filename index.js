@@ -1,23 +1,18 @@
 var express = require('express')
 var bodyParser = require('body-parser')
+var session = require('express-session');
+var moment = require('moment');
 var app = express()
-var _ = require('lodash')
-var lst = []
 var port = 3000;
 var db = require('./queries')
-var bookings, booking1, clients;
-
-db.booking_promise.then((res) => {
-	bookings = res.rows;
-})
-db.booking_promise_us.then((res) => {
-  booking1 = res.rows;
-})
+var bookings, clients;
+var ssn;
 
 db.client_promise.then((res) => {
 	clients = res.rows;
 })
 
+app.use(session({secret:'XASDASDA'}));
 app.use('/public', express.static('public'));
 app.use(bodyParser.json())
 app.use(
@@ -27,22 +22,19 @@ app.use(
 )
 
 app.get('/', (request, response) => {
-  response.redirect('/bookings');
+  response.redirect('/login');
 })
-app.get("/bookings",function(req,res) {
-  lst = { 'list': [bookings, booking1]}
-	res.render("booking_index", {bookings:bookings.concat(booking1)});
 
-});
-app.get("/booking_create",function(req, res) {
-	res.render("booking_create");
-});
-app.post("/booking_create",db.createBooking);
-app.put("/booking_edit",db.editBooking);
+app.get('/login', db.getLogin);
+app.post('/login', db.getLogin);
+app.get('/bookings', db.getBookings);
+app.get('/booking',db.createBooking);
+app.post('/booking',db.createBooking);
+app.get('/booking/:id',db.getBooking);
+app.put('/booking/:id',db.updateBooking);
+app.get('/booking_delete/:id', db.deleteBooking);
 
-app.get("/client_create",function(req, res) {
-    res.render("client_create");
-});
+app.get("/client_create",db.createClient);
 app.get("/clients",function(req,res) {
 	res.render("client_index", {clients:clients});
 });
@@ -50,7 +42,7 @@ app.get("/clients",function(req,res) {
 app.get('/client/:id', db.getClientById)
 app.post('/clients', db.createClient)
 app.put('/client/:id', db.updateClient)
-app.delete('/clients/:id', db.deleteClient)
+app.post('/clients/:id', db.deleteClient)
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
