@@ -70,50 +70,64 @@ const lookupBooking = (request, response) => {
   if(!ssn.distributor)
     response.redirect('/login')
   var i = parseInt(ssn.distributor);
-  var search_results = [], ids = [], id1 = [], id2 = [];
+  var search_results = [], ids = [];
   var car_code, rental_date, id;
-  var count = 0;
   var keyword = request.body.keyword;
 
   const client_promise = new Promise(function(resolve, reject) {
-  pools['pii_eu'].query("SELECT * FROM clients WHERE name LIKE '%"+request.body.keyword+
-    "%' OR email LIKE '%"+request.body.keyword+"%'", (error, result1) => {
-      console.log("here 0")
+    pools['pii_eu'].query("SELECT * FROM clients WHERE name LIKE '%"+request.body.keyword+
+                      "%' OR email LIKE '%"+request.body.keyword+"%'", (error, result1) => {
       if (error) {
-         throw error
-       }
-       if(result1.rows != '') {
-       console.log("here 1") 
-         for(var i = 0; i < result1.rows.length; i++) {
-            var arr = {};
-            arr[i] = result1.rows[i].id;
-
-            ids.push(arr);
-            count++;
-            console.log(ids);
-         }
-       }
-       resolve(result1);
-     });
-  pools['pii_us'].query("SELECT * FROM clients WHERE name LIKE '%"+request.body.keyword+
-    "%' OR email LIKE '%"+request.body.keyword+"%'", (error, result2) => {
+        throw error;
+      }
+      for(var i = 0; i < result1.rows.length; i++) {
+        ids.push(result1.rows[i].id);
+      }
+      
+      pools['pii_us'].query("SELECT * FROM clients WHERE name LIKE '%"+request.body.keyword+
+                          "%' OR email LIKE '%"+request.body.keyword+"%'", (error, result2) => {
         if (error) {
-           throw error
-         }
-        if(result2.rows!='') { 
-           for(var i = 0; i < result2.rows.length; i++) {
-            var arr = {};
-            arr[i] = result2.rows[i].id;
-
-            ids.push(arr);
-            count++;
-            console.log(ids);
-
-         }
-       }
-       resolve(result2)
+          throw error;
+        }
+        for(var i = 0; i < result2.rows.length; i++) {
+          ids.push(result2.rows[i].id);
+        }
+        resolve(ids);
       });
-  }).then ((res) => {
+    });
+  });
+
+
+  client_promise.then(data => {
+    console.log(data);
+
+    var params = [];
+    for(var n = 1; n<=data.length; n++) {
+        params.push('$'+n);
+    }
+
+    dist_pools[i].query('SELECT * FROM bookings WHERE client_id IN ('+params.join(',')+')',data,(error, result3) => {
+      if (error) {
+        throw error;
+      }
+      console.log(result3);
+
+      for(var i = 0; i < result3.rows.length; i++) {
+        //
+        var arr = {};
+        arr['id'] = result3.rows[i].id;
+        arr['car_code'] = result3.rows[i].car_code;
+        search_results.push(arr);
+      }
+      response.render("search_results",{ search_results : search_results, count : search_results.length, keyword : keyword });
+
+    });
+
+  });
+
+
+
+  /*}).then ((res) => {
     console.log("here3");
     if(ids['0']!='') {
       var params = [];
@@ -135,11 +149,10 @@ const lookupBooking = (request, response) => {
             console.log(search_results);
          }
        }
-      response.render("search_results",{ search_results : search_results, count : count, keyword : keyword });
 
       });
     }
-  });
+  });*/
 }
 
 
