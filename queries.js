@@ -22,6 +22,7 @@ const pools = {
   }),
 
   //create table distributors (id seiral primary key, name varchar (255));
+  //insert into distributors ('name') values ('ATT Airline'),(GP Agency), (Booking Agency);
   'all_dist': new Pool({
     user: 'dev',
     host: 'localhost',
@@ -62,7 +63,6 @@ const getLogin = (request, response) => {
   ssn = request.session;
   ssn.distributor = request.body.distributors;
 
-  console.log(!ssn.distributor)
   if(ssn.distributor)
     response.redirect('/bookings')
 
@@ -109,7 +109,6 @@ const lookupBooking = (request, response) => {
 
 
   client_promise.then(data => {
-    console.log(data);
 
     var params = [];
     for(var n = 1; n<=data.length; n++) {
@@ -120,7 +119,6 @@ const lookupBooking = (request, response) => {
       if (error) {
         throw error;
       }
-      console.log(result3);
 
       for(var i = 0; i < result3.rows.length; i++) {
         //
@@ -135,83 +133,7 @@ const lookupBooking = (request, response) => {
 
   });
 
-
-
-  /*}).then ((res) => {
-    console.log("here3");
-    if(ids['0']!='') {
-      var params = [];
-      for(var n = 1; n<=ids.length; n++){
-        params.push('$'+n);
-      }
-      console.log(params);
-        dist_pools[i].query('SELECT * FROM bookings WHERE client_id IN ('+params.join(',')+')',["8f73a989-d103-4aec-b4aa-9c0dca4d0c94","8f73a989-d103-4aec-b4aa-9c0dca4d0c94" ],(error, result3) => {
-        if (error) {
-           throw error
-         }
-        if(result3.rows!='') { 
-           for(var i = 0; i < result3.rows.length; i++) {
-            var arr = {};
-            arr['id'] = result3.rows[i].id;
-            arr['car_code'] = result3.rows[i].car_code;
-            search_results.push(arr);
-            count++;
-            console.log(search_results);
-         }
-       }
-
-      });
-    }
-  });*/
 }
-
-
-// const lookupBooking = (request, response) => {
-//   ssn = request.session;
-//   if(ssn.distributor)
-//     response.redirect('/bookings')
-//   var i = parseInt(ssn.distributor);
-//   var count = 0;
-//   var keyword = request.body.keyword;
-//   var search_results = [];
-//   var ids = [];
-//   const client_promise = new Promise(function(resolve, reject) {
-//   pools['pii_eu'].query("SELECT id FROM clients WHERE name LIKE '%"+request.body.keyword+
-//     "%' OR email LIKE '%"+request.body.keyword+"%'", (error, result1) => {
-//     if (error) {
-//       throw error;
-//     }
-//     for(i=0;i<result1.length;i++)
-//       {
-//         var data = result1.rows[id].id;
-//         ids.push(data);
-//         console.log(data);
-//         console.log(ids);
-//         count++;
-//       }
-//       resolve(results);
-//     });
-//   }).then((res) => {
-//   pools['pii_us'].query("SELECT id FROM clients WHERE name LIKE '%"+request.body.keyword+
-//     "%' OR email LIKE '%"+request.body.keyword+"%'", (error, result2) => {
-//     if (error) {
-//       throw error;
-//     }
-//     var data = [];
-//     for(i=0;i<result1.length;i++)
-//       {
-//         var data = result2.rows[id].id;
-//         ids.push(data);
-//         count++;
-//       }
-//     });
-
-//   });
-
-
-//     response.render("search_results", { results : search_results, count : count, keyword : keyword});
-
-// }
 
 
 const getBookings = (request, response) => {
@@ -219,7 +141,6 @@ const getBookings = (request, response) => {
   if(!ssn.distributor) 
     response.redirect('/login');
   var i = parseInt(ssn.distributor);
-  console.log(i)
   dist_pools[i].query('SELECT * FROM bookings ORDER BY id ASC', (error, results) => {
     if (error) {
       throw error;
@@ -231,22 +152,18 @@ const getBookings = (request, response) => {
 
 const createBooking = (request, response) => {
   ssn = request.session;
-  console.log(ssn.distributor)
   if(!ssn.distributor) 
     response.redirect('/login');
   var i = parseInt(ssn.distributor);
   var client_id;
 
   const { name, email, phone, address, date_of_birth, car_code, rental_date, is_eu_client } = request.body;
-  console.log('here 0');
   var promise = new Promise((resolve, reject) => {
-    console.log('here 1');
     if(is_eu_client=='Y') {
       pools['pii_eu'].query('INSERT INTO clients (name, email, phone, address, date_of_birth) VALUES ($1, $2, $3, $4, $5) RETURNING id', [name, email, phone, address, date_of_birth], (error, result1) => {
         if (error) {
           reject(error);
         }
-        console.log('here 2', result1);
         resolve(result1.rows[0].id);
       })
     }  else {
@@ -254,22 +171,19 @@ const createBooking = (request, response) => {
         if (error) {
           reject(error);
         }
-        console.log('here 2---', result2);
        resolve(result2.rows[0].id);
       })
     }
   });
-  console.log('here 3');
 
   promise.then(client_id => {
     dist_pools[i].query('INSERT INTO bookings (client_id, car_code, rental_date, is_eu_client ) VALUES ($1, $2, $3, $4)', [client_id, car_code, rental_date, is_eu_client], (error, result3) => {
       if (error) {
         throw error
       }
-      response.render("booking_create");
+      response.redirect("/bookings");
     })
   }).catch(error => {
-    console.log('here 4', error);
     throw error;
   });
 }
@@ -284,7 +198,6 @@ const getBooking = (request, response) => {
     var v_client_id, v_car_code, v_rental_date, v_is_eu_client, v_name, v_email, v_phone, v_address, v_date_of_birth;
 
     dist_pools[i].query("SELECT *,TO_CHAR(rental_date, 'YYYY-MM-DD') f_date FROM bookings where id = $1", [id] ,(error,results) => {
-      console.log(results);
       if (error) {
         throw error;
       }
@@ -335,7 +248,6 @@ const updateBooking = (request, response) => {
   const id = parseInt(request.params.id);
   
   const { client_id, car_code, rental_date, is_eu_client, name, email, phone, address, date_of_birth } = request.body;
-  console.log(is_eu_client)
   var client_pool = (is_eu_client == 'Y') ? 'pii_eu' : 'pii_us';
 
   dist_pools[i].query(

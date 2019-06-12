@@ -1,18 +1,34 @@
 <html>
   <head>
     <title> Bookings </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet">
     <link href="../public/styles.css" rel="stylesheet">
   </head>
   <body>
-    <div class="container">
-      <%- include('header'); %>
-      <h3>Booking Results for <%= keyword %></h3>
+    <div class = "container">
+    <%- include('header'); %>
+    <h3>Booking Results for <%= keyword %></h3>
       <%= (count == 0 ) ? "No search result found.":"" %>
-      <% for(var i in search_results) { %>
-          <a href="/booking/<%= search_results[i].id %>">
-          <li><%= i+1 %> </a>| booking code : <%= search_results[i].car_code %></li>
-      <% } %><br>
-  </div>
+
+    <table class="table">
+      <thead>
+        <th scope="col">Booking ID</th>
+        <th scope="col">Car Nr.</th>
+        
+      </thead>
+      <tbody>
+        <% for(var i in search_results) { %>
+          <tr>
+            <th scope="row"><a href="/booking/<%= search_results[i].id %>">Booking <%= i+1 %></a></th>
+            <td><%= search_results[i].car_code %></td>
+            
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+</div>
   </body>
 </html>

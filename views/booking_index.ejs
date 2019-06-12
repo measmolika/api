@@ -1,6 +1,10 @@
 <html>
   <head>
     <title> Bookings </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet">
     <link href="../public/styles.css" rel="stylesheet">
   </head>
@@ -9,13 +13,33 @@
     <%- include('header'); %>
     <h3>Booking Lookup</h3>
     <form action="/search" method="post">
+      <div class="form-group">
       <input type="text" class="form-control web-search-box" placeholder="Enter name or email ..." name="keyword" value=''>
-      <input type="submit" value="search">
+    </div>
+      <input type="submit" class="btn btn-dark" value="search">
     </form>
-          <h2> Manage Bookings </h2>
-      <% for(var i = 0; i < bookings.length; i++){ %>
-            <li><a href="/booking/<%=bookings[i].id%>"><%= i+1 %> </a> | code : <%= bookings[i].car_code %> | <a href="/booking/<%=bookings[i].id%>"> Edit </a> | <a href="/booking_delete/<%= bookings[i].id %>"> DEL </a></li>
-      <% } %><br>
+
+    <h2> Manage Bookings</h2>
+
+    <table class="table">
+      <thead>
+        <th scope="col">Booking ID</th>
+        <th scope="col">Car Nr.</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </thead>
+      <tbody>
+        <% for(var i = 0; i < bookings.length; i++){ %>
+          <tr>
+            <th scope="row"><a href="/booking/<%=bookings[i].id%>">Booking <%= i+1 %> </a></th>
+            <td><%= bookings[i].car_code %></td>
+            <td><a href="/booking/<%=bookings[i].id%>"> Edit</a> </td>
+            <td><a href="/booking_delete/<%= bookings[i].id %>"> DEL</a></td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+
     <%- include('footer'); %>
   </div>
   </body>

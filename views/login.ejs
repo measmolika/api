@@ -1,6 +1,9 @@
 <html>
   <head>
     <title> Distributor Login </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet">
     <link href="../public/styles.css" rel="stylesheet">
   </head>
@@ -8,12 +11,14 @@
     <div class="container">
       <h2>Select Distributor</h2>
       <form action="/login" method='POST'>
-      <select name="distributors">
-      <% for(var i = 0; i < distributors.length; i++){ %>
-            <option value="<%= distributors[i].id%>"> <%= distributors[i].name %></option>
-      <% } %><br>
-      </select>
-      <input type="submit" value="Submit">
+      <div class="form-group">
+        <select class="form-control" name="distributors">
+        <% for(var i = 0; i < distributors.length; i++){ %>
+              <option value="<%= distributors[i].id%>"> <%= distributors[i].name %></option>
+        <% } %><br>
+        </select>
+      </div>
+      <input type="submit" class="btn btn-success" value="Submit">
     </form>
   </div>
   </body>
