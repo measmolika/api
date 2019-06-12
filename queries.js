@@ -1,6 +1,8 @@
 const Pool = require('pg').Pool
 
 const pools = {
+  //create table clients (id uuid primary key default gen_random_uuid(), name varchar (30), 
+  // email varchar (255), phone varchar (30), address varchar (255), date_of_birth date);
   'pii_us': new Pool({
     user: 'dev',
     host: 'localhost',
@@ -8,6 +10,9 @@ const pools = {
     password: 'dev',
     port: 5432,
   }),
+
+  //create table clients (id uuid primary key default gen_random_uuid(), name varchar (30), 
+  // email varchar (255), phone varchar (30), address varchar (255), date_of_birth date);
   'pii_eu': new Pool({
     user: 'dev',
     host: 'localhost',
@@ -15,6 +20,8 @@ const pools = {
     password: 'dev',
     port: 5432,
   }),
+
+  //create table distributors (id seiral primary key, name varchar (255));
   'all_dist': new Pool({
     user: 'dev',
     host: 'localhost',
@@ -24,6 +31,7 @@ const pools = {
   })
 };
 const dist_pools = {
+  //create table bookings (id serial primary key, client_id uuid, car_code varchar (30), rental_date date );
   1: new Pool({
     user: 'dev',
     host: 'localhost',
@@ -31,6 +39,7 @@ const dist_pools = {
     password: 'dev',
     port: 5432,
   }),
+  //create table bookings (id serial primary key, client_id uuid, car_code varchar (30), rental_date date );
   2: new Pool({
     user: 'dev',
     host: 'localhost',
@@ -38,6 +47,7 @@ const dist_pools = {
     password: 'dev',
     port: 5432,
   }),
+  //create table bookings (id serial primary key, client_id uuid, car_code varchar (30), rental_date date );
   3: new Pool({
     user: 'dev',
     host: 'localhost',
