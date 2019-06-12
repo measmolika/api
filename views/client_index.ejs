@@ -10,7 +10,7 @@
           <h2> Clients </h2>
       <% for(var i = 0; i < clients.length; i++){ %>
             <a href="/client/<%= clients[i].id %>">
-            <li>id : <%= clients[i].id %> | name : <%= clients[i].name %> |  | email : <%= clients[i].email %></li></a>
+            <li>id : <%= i+1 %> </a>| name : <%= clients[i].name %> | email : <%= clients[i].email %></li>
       <% } %><br>
 
       <a href="/client_create">New Client</a><br>

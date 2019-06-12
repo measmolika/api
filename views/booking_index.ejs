@@ -6,8 +6,12 @@
   </head>
   <body>
     <div class="container">
-      
-          <h2> Bookings </h2>
+    <h3>Booking Lookup</h3>
+    <form action="/search" method="post">
+      <input type="text" class="form-control web-search-box" placeholder="Enter name or email ..." name="keyword" value=''>
+      <input type="submit" value="send">
+    </form>
+          <h2> Manage Bookings </h2>
       <% for(var i = 0; i < bookings.length; i++){ %>
             <li><a href="/booking/<%=bookings[i].id%>">id: <%= i+1 %> </a> | code : <%= bookings[i].car_code %> | <a href="/booking/<%=bookings[i].id%>"> Edit </a> | <a href="/booking_delete/<%= bookings[i].id %>"> DEL </a></li>
       <% } %><br>
