@@ -1,17 +1,18 @@
 <html>
   <head>
-    <title> Clients </title>
+    <title> Bookings </title>
     <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet">
     <link href="../public/styles.css" rel="stylesheet">
   </head>
   <body>
     <div class="container">
+      <%- include('header'); %>
       <h3>Booking Results for <%= keyword %></h3>
-      <% for(var i = 0; i < results.length; i++){ %>
-            <a href="/client/<%= results[i].id %>">
-            <li>id : <%= i+1 %> </a>| name : <%= results[i].name %> | email : <%= results[i].email %></li>
+      <%= (count == 0 ) ? "No search result found.":"" %>
+      <% for(var i in search_results) { %>
+          <a href="/booking/<%= search_results[i].id %>">
+          <li><%= i+1 %> </a>| booking code : <%= search_results[i].car_code %></li>
       <% } %><br>
-
   </div>
   </body>
 </html>

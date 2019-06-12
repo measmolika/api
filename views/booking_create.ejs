@@ -9,6 +9,7 @@
   
 <body>
     <div class="container">
+        <%- include('header'); %>
         <h2>New Booking</h2>
         <form action="http://localhost:3000/booking" method="post">
             <label for="name">Name</label>
@@ -28,9 +29,6 @@
             <input type="checkbox" name="is_eu_client" value="Y"> I am an EU residence.<br>
             <input type="submit">
         </form>
-        <br>
-        <a href="/bookings">View Bookings</a><br>
-        <a href="/client_create">Register New Client</a>
     </div>
 </body>
  

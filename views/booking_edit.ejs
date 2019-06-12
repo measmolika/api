@@ -9,6 +9,7 @@
  
 <body>
     <div class="container">
+        <%- include('header'); %>
         <h2>Edit Booking</h2>
         <form action="http://localhost:3000/booking/<%= id %>" method="POST">
             <input type="text" name="client_id" value="<%= client_id %>" hidden><br>
@@ -27,10 +28,8 @@
             <input type="text" name="car_code" value="<%= car_code %>"><br>
             <label for="rental_date">Rental Date</label>
             <input type="date" name="rental_date" value="<%= rental_date %>"><br>
-            <input type="checkbox" disabled="disabled" <%= (is_eu_client == 'Y')? "checked":"" %>/> I am an EU residence.<br>
             <input type="submit">
         </form>
-        <a href="/bookings">View Bookings</a>
     </div>
 </body>
  

@@ -5,7 +5,7 @@ var moment = require('moment');
 var app = express()
 var port = 3000;
 var db = require('./queries')
-var bookings, clients;
+//var bookings, clients;
 var ssn;
 
 app.use(session({secret:'XASDASDA'}));
@@ -31,19 +31,20 @@ app.post('/booking',db.createBooking);
 app.get('/booking/:id',db.getBooking);
 app.post('/booking/:id',db.updateBooking);
 app.get('/booking_delete/:id', db.deleteBooking);
+
 app.post('/search',db.lookupBooking);
-app.get('/client_create',(req,resp) => {
-	resp.render('client_create');
-});
 app.get('/search_results',(req,resp) => {
 	resp.render('search_results');
 });
 
-app.get('/clients',db.getClients);
-app.get('/client/:id', db.getClientById)
-app.post('/clients', db.createClient)
-app.put('/client/:id', db.updateClient)
-app.post('/clients/:id', db.deleteClient)
+app.get('/client_create',(req,resp) => {
+	resp.render('client_create');
+});
+//app.get('/clients',db.getClients);
+//app.get('/client/:id', db.getClientById)
+//app.post('/clients', db.createClient)
+// app.put('/client/:id', db.updateClient)
+// app.post('/clients/:id', db.deleteClient)
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)

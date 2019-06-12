@@ -6,19 +6,17 @@
   </head>
   <body>
     <div class="container">
+    <%- include('header'); %>
     <h3>Booking Lookup</h3>
     <form action="/search" method="post">
       <input type="text" class="form-control web-search-box" placeholder="Enter name or email ..." name="keyword" value=''>
-      <input type="submit" value="send">
+      <input type="submit" value="search">
     </form>
           <h2> Manage Bookings </h2>
       <% for(var i = 0; i < bookings.length; i++){ %>
-            <li><a href="/booking/<%=bookings[i].id%>">id: <%= i+1 %> </a> | code : <%= bookings[i].car_code %> | <a href="/booking/<%=bookings[i].id%>"> Edit </a> | <a href="/booking_delete/<%= bookings[i].id %>"> DEL </a></li>
+            <li><a href="/booking/<%=bookings[i].id%>"><%= i+1 %> </a> | code : <%= bookings[i].car_code %> | <a href="/booking/<%=bookings[i].id%>"> Edit </a> | <a href="/booking_delete/<%= bookings[i].id %>"> DEL </a></li>
       <% } %><br>
-
-      <a href="/booking">New Booking</a><br>
-      <a href="/clients">View Clients</a><br>
-      <a href="/client_create">New Client</a>
+    <%- include('footer'); %>
   </div>
   </body>
 </html>
