@@ -110,6 +110,7 @@ const lookupBooking = (request, response) => {
 
   client_promise.then(data => {
 
+    if(data.length > 0) {
     var params = [];
     for(var n = 1; n<=data.length; n++) {
         params.push('$'+n);
@@ -129,7 +130,8 @@ const lookupBooking = (request, response) => {
       }
       response.render("search_results",{ search_results : search_results, count : search_results.length, keyword : keyword });
 
-    });
+    });}
+    response.render("search_results",{ search_results : search_results, count : search_results.length, keyword : keyword });
 
   });
 
