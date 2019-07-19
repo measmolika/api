@@ -1,4 +1,6 @@
 # api
+A sample web application for car rental service that stores client data over multiple countries in USA and EU
+
 Instuctions:
 1. clone project and run 
 $npm install
